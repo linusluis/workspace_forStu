@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jsx小练习</title>
+</head>
+
+<body>
+    <!-- //创建一个容器 -->
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script src='../../js/react.development.js'></script>
+    <!-- 引入react-dom库，为了让react可以操作DOM -->
+    <script src='../../js/react-dom.development.js'></script>
+    <!-- 引入babel，为了将jsx转为js -->
+    <script src='../../js/babel.min.js'></script>
+    <script type='text/babel'>
+        //定义一组数据，用于遍历
+        const data = ['Angular', 'Vue', 'React'];
+        // 创建一个虚拟DOM
+        const VDOM = (
+            <div>
+                <h1>前端js框架列表</h1>
+                <ul>
+                    {//在标签中混入js表达式要用{}包裹
+                        data.map((value, index) => {
+                            //一般都不用index做key，会对界面和效率产生问题，一般会用唯一id作为key
+                            return <li key={index}>{value}</li> //要记得return
+                        })
+                    }
+                </ul>
+            </div>
+        )
+        // 将虚拟DOM渲染至页面
+        ReactDOM.render(VDOM, document.getElementById('test'));
+    </script>
+</body>
+
+</html>

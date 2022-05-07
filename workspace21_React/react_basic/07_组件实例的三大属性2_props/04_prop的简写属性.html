@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>props的简写属性</title>
+</head>
+<body>
+    <!-- 创建容器 -->
+    <div id="test"></div>
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <div id="test3"></div>
+    <div id="test4"></div>
+    <!-- 引入react核心库 -->
+    <script src = '../../js/react.development.js'></script>
+    <!-- 引入react-dom，用于让react操作DOM -->
+    <script src = '../../js/react-dom.development.js'></script>
+    <!-- 引入babel，用于将jsx转为js -->
+    <script src = '../../js/babel.min.js'></script>
+    <!-- 引入prop-types，用于对标签属性进行限制 -->
+    <script src ='../../js/prop-types.js'></script>
+    <script type = 'text/babel'>
+        // 创建组件
+        class Person extends React.Component {
+            render(){
+                //获取传过来的props
+                const {name,age,sex} = this.props;
+                return(
+                    <ul>
+                        <li>姓名：{name}</li>                        
+                        <li>年龄：{age}</li>                        
+                        <li>性别：{sex}</li>                        
+                    </ul>
+                )
+            }
+            //对标签属性进行类型、必要性的限制
+            static propTypes = {
+                name:PropTypes.string.isRequired,
+                age:PropTypes.number,
+                sex:PropTypes.string
+            }
+            //指定默认标签属性值
+            static defaultProps = {
+                sex:'男',
+                age:18
+            }
+        }
+        //将组件渲染到页面
+        ReactDOM.render(<Person name = 'juren' age ={27} sex = '男'/>,document.getElementById('test1'));
+        ReactDOM.render(<Person name = 'bingo' age ={19} sex = '女'/>,document.getElementById('test2'));
+        ReactDOM.render(<Person name = 'luxu'/>,document.getElementById('test3'));
+        const p = {name:'siri',age:33};
+        ReactDOM.render(<Person {...p}/>,document.getElementById('test4'));
+    </script>
+</body>
+</html>

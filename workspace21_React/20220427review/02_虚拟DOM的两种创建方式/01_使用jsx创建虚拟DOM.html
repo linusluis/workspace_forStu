@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用jsx创建虚拟DOM</title>
+</head>
+<body>
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script src = '../../js/react.development.js'></script>
+    <!-- 引入react-dom,用于把让react操作DOM -->
+    <script src = '../../js/react-dom.development.js'></script>
+    <!-- 引入babel，用于将jsx转为js -->
+    <script src ='../../js/babel.min.js'></script>
+    <!-- 引入type-props，用于对props做类型和默认值的限制 -->
+    <script src = '../../js/prop-types.js'></script>
+    <script type = 'text/babel'>
+        const VDOM = (
+            <h1><span>Hello react</span></h1>
+        )
+        ReactDOM.render(VDOM,document.getElementById("test"));
+    </script>
+
+</body>
+</html>

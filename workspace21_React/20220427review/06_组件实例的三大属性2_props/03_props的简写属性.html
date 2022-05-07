@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>props的简写属性</title>
+</head>
+
+<body>
+    <div id="test"></div>
+    <div id="test2"></div>
+    <div id="test3"></div>
+    <div id="test4"></div>
+    <!-- 引入react -->
+    <script src='../../js/react.development.js'></script>
+    <!-- 引入react-dom，为了让react操作DOM -->
+    <script src='../../js/react-dom.development.js'></script>
+    <!-- 引入babel,为了将jsx转为js -->
+    <script src='../../js/babel.min.js'></script>
+    <!-- 引入prop-types，对props的类型和默认值做出限制 -->
+    <script src='../../js/prop-types.js'></script>
+    <script type='text/babel'>
+        class Person extends React.Component {
+            render() {
+                const { name, age, sex } = this.props;
+                return (
+                    <ul>
+                        <li>姓名：{name}</li>
+                        <li>性别：{sex}</li>
+                        <li>年龄：{age}</li>
+                    </ul>
+                )
+            }
+            static propTypes = {
+                name: PropTypes.string.isRequired,
+                age: PropTypes.number,
+                sex: PropTypes.string
+            }
+            static defaultProps = {
+                age: 21,
+                sex: 'maleOrfemal'
+            }
+        }
+
+        const p = { name: 'jeren', age: 22, sex: 'male' };
+        ReactDOM.render(<Person name='luis' age={18} sex='male' />, document.getElementById('test'));
+        ReactDOM.render(<Person name='pure' age={27} />, document.getElementById('test2'));
+        ReactDOM.render(<Person age={32} sex='female' />, document.getElementById('test3'));
+        ReactDOM.render(<Person {...p} />, document.getElementById('test4'));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高阶函数和函数柯里化</title>
+</head>
+<body>
+    <div id="test"></div>
+    <script src = '../../js/react.development.js'></script>
+    <script src = '../../js/react-dom.development.js'></script>
+    <script src = '../../js/babel.min.js'></script>
+    <script src = '../../js/prop-types.js'></script>
+    <script type = 'text/babel'>
+        class Login extends React.Component {
+            state = {username:'',passWord:''};
+            render(){
+                return(
+                    <form action="https://www.baidu.com">
+                        username:<input onChange = {this.serveFormat('username')} type="text" />
+                        password:<input type="text" onChange = {this.serveFormat('passWord')}/>
+                        <button onClick = {this.handleSubmit}>提交</button>
+                        </form>
+                )
+            }
+            handleSubmit = (event)=>{
+                event.preventDefault();
+                const {username,passWord} = this.state;
+                alert(`您的username是${username}，password是${passWord}`);
+            }
+            serveFormat = (dataType)=>{
+                return (event)=>{
+                    this.setState({[dataType]:event.target.value});
+                }
+            }
+        }
+        ReactDOM.render(<Login/>,document.getElementById('test'));
+    </script>
+</body>
+</html>

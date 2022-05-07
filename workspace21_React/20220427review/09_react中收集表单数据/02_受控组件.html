@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>受控组件</title>
+</head>
+
+<body>
+    <!-- 创建一个容器 -->
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script src='../../js/react.development.js'></script>
+    <!-- 引入react-dom，用于让react操作dom -->
+    <script src='../../js/react-dom.development.js'></script>
+    <!-- 引入babel，用于将jsx转为js -->
+    <script src='../../js/babel.min.js'></script>
+    <!-- 引入prop-types，用于将标签属性做限制 -->
+    <script src='../../js/prop-types.js'></script>
+    <script type='text/babel'>
+        class Login extends React.Component {
+            state = {username:'',password:''};
+            render() {
+                return (
+                    <form action="https://www.baidu.com">
+                        {/*onChange绑定事件和state更新是受控组件的主要特征*/}
+                        username：<input type="text" onChange={this.serveUsername} />
+                        password：<input type="text" onChange={this.servePassword} />
+                        <button onClick={this.handleCommit}>提交</button>
+                    </form>
+                )
+            }
+            serveUsername = (event)=>{
+                event.preventDefault();
+                const {username} = this.state;
+                console.log(event.target.value);
+                this.setState({username:event.target.value});
+            }
+            servePassword = (event)=>{
+                const {username} = this.state;
+                console.log(event.target.value);
+                this.setState({password:event.target.value});
+            }
+            handleCommit = ()=>{
+                const {username,password} = this.state;
+                alert(`输入的用户名为：${username}，输入的密码为：${password}`);
+                
+            }
+        }
+        ReactDOM.render(<Login />, document.getElementById('test'));
+    </script>
+</body>
+
+</html>

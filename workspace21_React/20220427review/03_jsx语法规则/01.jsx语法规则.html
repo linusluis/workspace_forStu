@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jsx语法规则</title>
+</head>
+<body>
+    <!--创建一个容器-->
+    <div id="test">test</div> 
+    <script src = '../../js/react.development.js'></script>
+    <!-- 引入react核心文件 -->
+    <script src='../../js/react.development.js'></script>
+    <!-- 引入react-dom库 ，用于操作react中的dom-->
+    <script src='../../js//react-dom.development.js'></script>
+    <!-- 引入babel 用于将jsx转为js-->
+    <script src='../../js/babel.min.js'></script>
+    <script type = 'text/babel'>
+        const myId = 'avEPOINT';
+        const myData = 'Hello REact';
+        //创建虚拟DOM
+        const VDOM = (
+            <div>{/*只能有一个根标签*/}
+                {/*jsx中使用className设置类属性，避免与ES6语法中的class类发生歧义*/}
+                {/*设置内联样式，需要使用{{}}包裹*/}
+                <h2 className = 'title' id = {myId.toLowerCase()} style = {{color:'blue'}}>
+                    <span>{myData.toLowerCase()}</span>
+                </h2>
+                <input type="text"/> {/*一定要有自结束标签*/}    
+            </div>
+        )
+        // 将虚拟DOM渲染至页面
+        ReactDOM.render(VDOM,document.getElementById('test'));
+    </script>
+</body>
+</html>

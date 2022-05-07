@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>react生命周期_父组件render流程</title>
+</head>
+<body>
+    <div id="test"></div>
+    <script src = '../../js/react.development.js'></script>
+    <script src = '../../js/react-dom.development.js'></script>
+    <script src = '../../js/babel.min.js'></script>
+    <script src = '../../js/prop-types.js'></script>
+    <script type = 'text/babel'>
+        //定义一个父组件
+        class A extends React.Component{
+            state = {carName : '奔驰'};
+            changeCar = ()=>{
+                const {carName} = this.state;
+                this.setState({carName:'本田'});
+                console.log(`操作------------------------------------------父组件第2次render，第一次render为页面加载`);
+            }  
+            render(){
+                const {carName} = this.state;  
+                return(
+                    <div>
+                        <div>我是A组件（父组件）</div>    
+                        <button onClick = {this.changeCar}>换车</button>
+                        {/*在A中调用B组件，A是父组件，B是子组件。并且可以把A中的状态传递给子组件*/}
+                        <B carName= {carName}/>
+                    </div>
+                )
+            }
+        }
+        // 定义一个子组件 
+        class B extends React.Component{
+            //组件将要接收新的props钩子
+            componentWillReceiveProps(props){
+                console.log('B---componentWillReceiveProps---在父组件A首次渲染页面的时候，虽然传递过来了参数，但是我是不会执行的，只有之后传递来新的参数，我才会执行。');
+            }
+            //控制组件更新的阀门
+            shouldComponentUpdate(){
+                console.log('B---shouldComponentUpdate---组件更新时先执行我，如果我是true，可以继续向下执行，如果我是false，呵呵呵---很幸运我今天是true')
+                return true;
+            }
+            //组件将要更新的钩子
+            componentWillUpdate(){
+                console.log('B---componentWillUpdate---组件更新时我执行');
+            }
+            death= ()=>{
+                console.log('操作--------------------------------------------------------卸载组件');
+                //卸载组件
+                ReactDOM.unmountComponentAtNode(document.getElementById('test'));
+            }
+            render(){
+                return(
+                    <div>
+                        {/*用props接收父组件传递过来的值属性*/}
+                        <div>我是B组件（子组件），我接受到的车是：{this.props.carName}</div>
+                        <button onClick= {this.death}>卸载组件</button>    
+                    </div>
+                )
+            }
+            //组件更新完毕的钩子
+            componentDidUpdate(){
+                console.log('B---componentDidUpdate---组件更新完我执行');
+            }
+            //组件将要卸载
+            componentWillUnmount(){
+                console.log('B---componentWillUnMount---组件卸载时我执行');
+            }
+        }
+        // 挂载父组件
+        ReactDOM.render(<A/>,document.getElementById('test'));
+    </script>
+</body>
+</html>

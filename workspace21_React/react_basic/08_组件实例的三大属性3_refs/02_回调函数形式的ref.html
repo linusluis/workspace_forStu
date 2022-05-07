@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>回调形式的ref</title>
+</head>
+<body>
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script src = '../../js/react.development.js'></script>
+    <!-- 引入react-dom，用于让react操作DOM -->
+    <script src = '../../js/react-dom.development.js'></script>
+    <!-- 引入babel，为了将jsx转为js -->
+    <script src = '../../js/babel.min.js'></script>
+    <!-- 引入prop-types，为了对标签属性进行限制 -->
+    <script src = '../../js/prop-types.js'></script>
+
+    <script type = 'text/babel'>
+        class Demo extends React.Component {
+            render(){
+                return (
+                    <div>
+                    <input ref = {currentNode=>this.input1 = currentNode} type="text" placeholder='点击按钮提示数据'/>
+                    <button onClick = {this.showData}>点我提示左侧的数据</button>    
+                    <input ref = {currentNode=>this.input2 = currentNode} onBlur = {this.showData2} type="text" placeholder="失去焦点提示数据"/>
+                    </div>
+                )
+            }
+            showData = () =>{
+                const {input1} = this;//注意这里是this，因为input1属性绑定给组件的实例对象
+                alert(input1.value);
+            }
+            showData2 = ()=>{
+                const {input2} = this;
+                alert(input2.value);
+            }
+        }
+        ReactDOM.render(<Demo/>,document.getElementById('test'));
+    </script>
+</body>
+</html>

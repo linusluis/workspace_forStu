@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>回调ref的调用次数</title>
+</head>
+<body>
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script src = '../../js/react.development.js'></script>
+    <!-- 引入react-dom，为了让react操作dom -->
+    <script src = '../../js/react-dom.development.js'></script>
+    <!-- 引入babel，为了将jsx转为js -->
+    <script src = '../../js/babel.min.js'></script>
+    <!-- 引入prop-types，为了做标签属性的限制 -->
+    <script type = 'text/babel'>
+        class Demo extends React.Component{
+            state = {isHot:false};
+            render(){
+                const {isHot} = this.state;
+                return (
+                    <div>
+                        <h1>今天天气很{isHot?'炎热':'凉爽'}</h1>
+                        {/*使用这种回调函数形式的ref，render每执行一次，ref会被调用两次，第一次e是null,第二次才是DOM元素*/}
+                        {/*<input ref = {e=>{this.input1 = e; console.log(e);}} type="text"/>*/}
+                        {/*将ref的回调函数定义成class的绑定函数的方式可以避免上述问题*/}
+                        <input ref = {this.saveInput} type="text"/>
+                        
+                        <button onClick = {this.showData}>点我提示输入的数据</button>
+                        <button onClick = {this.showWeather}>点我切换天气</button>
+                    </div>
+                )
+            }
+            saveInput = (currentNode)=>{
+                this.input1 = currentNode;
+                console.log(currentNode);//ref不会被调用两次了   
+            }
+            showData = ()=>{
+                const {input1} = this;
+                alert(input1.value);
+            }
+            showWeather = ()=>{     
+                const {isHot} = this.state;   
+                this.setState({isHot:!isHot});
+            }
+        }
+        ReactDOM.render(<Demo/>,document.getElementById('test'));
+    </script>
+</body>
+</html>

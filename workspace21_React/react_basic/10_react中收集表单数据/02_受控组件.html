@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>受控组件</title>
+</head>
+<body>
+    <!-- 创建一个容器 -->
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script src = '../../js/react.development.js'></script>
+    <!-- 引入react-dom，用于让react操作dom -->
+    <script src = '../../js/react-dom.development.js'></script>
+    <!-- 引入babel，用于将jsx转为js -->
+    <script src = '../../js/babel.min.js'></script>
+    <!-- 引入prop-types，用于将标签属性做限制 -->
+    <script src = '../../js/prop-types.js'></script>
+    <script type="text/babel"> 
+        class Login extends React.Component{
+            state = {
+                username:'',
+                password:''
+            }
+            render(){
+                return (
+                    <form action="https://www.atguigu.com" onSubmit={this.handleSubmit}>
+                        用户名：<input onChange ={this.saveUsername}  type="text" name='username'/>
+                        密码：<input type="text" onChange = {this.savePassword} name='password'/>
+                        <button>登录</button>
+                    </form>
+                )
+            }
+            handleSubmit = (event)=>{
+                event.preventDefault();
+                const {username,password} = this.state;
+                alert(`您输入的用户名为：${username}，您输入的密码为：${password}`);
+            }
+            saveUsername = (event) =>{
+                this.setState({username:event.target.value});
+            }
+            savePassword = ()=>{
+                this.setState({password:event.target.value});
+            }
+        }
+        //渲染组件到页面
+        ReactDOM.render(<Login/>,document.getElementById('test'));
+    </script>
+</body>
+</html>

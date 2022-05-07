@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>es6中类的复习</title>
+</head>
+
+<body>
+    <script>
+        class Person{
+            constructor(name,age){
+                this.name = name;
+                this.age = age;
+            }
+            speak(){
+                console.log(`我叫：${this.name}，今年${this.age}岁了`);
+            }
+        }
+        class Student extends Person{
+            constructor(name,age,grade){
+                super(name,age);
+                this.grade= grade;
+            }
+            //父类方法的重写,一旦重写子类实例就无法访问到父类中被重写的方法了
+            speak(){
+                console.log(`我叫：${this.name}，今年${this.age}岁了,${this.grade}年级`);
+            }
+            slogon='我们都是学生';//slogon类的自身访问不到，但是它的实例可以访问到
+            static c = '123';//c是类的静态属性，只有类自身可以访问到
+        }
+        let stu = new Student('lius',18,8);
+        stu.speak();
+        console.log(stu.slogon);//我们都是学生
+        console.log(stu.c);//undefined
+        console.log(Student.c);//123
+        console.log (Student.slogon);//undefined
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>引入生命周期</title>
+</head>
+<body>
+    <div id="test"></div>
+    <script src = '../../js/react.development.js'></script>
+    <script src = '../../js/react-dom.development.js'></script>
+    <script src = '../../js/babel.min.js'></script>
+    <script src = '../../js/prop-types.js'></script>
+    <script type = 'text/babel'>
+        class Life extends React.Component {
+            state = {opacity:1};
+            componentDidMount() {
+                this.timer = setInterval(() =>{
+                    let {opacity} = this.state;
+                    opacity-=0.1
+                    if(opacity<=0){
+                        opacity = 1;
+                    }
+                    this.setState({opacity});
+                },200)
+            }
+            handleData = ()=>{
+                ReactDOM.unmountComponentAtNode(document.getElementById('test'));
+            }
+            render(){
+                const {opacity} = this.state; 
+                return (
+                    <div>
+                        <h2 style ={{opacity:opacity}}>React学不会怎么办？</h2>
+                        <button onClick = {this.handleData}>不活了</button>
+                        </div>
+                )
+            }
+            componentWillUnmount() {
+                clearInterval(this.timer);
+            }
+        
+    }
+        ReactDOM.render(<Life/>,document.getElementById('test'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件处理</title>
+</head>
+<body>
+    <!-- 创建一个容器 -->
+    <div id="test"></div>
+    <!-- 引入React核心库 -->
+    <script src = '../../js/react.development.js'></script>
+    <!-- 引入react-dom，为了让react能够操作DOM -->
+    <script src = '../../js/react-dom.development.js'></script>
+    <!-- 引入babel，为了将jsx转为js -->
+    <script src = '../../js/babel.min.js'></script>
+    <!-- 引入prop-types为了做标签属性的限制 -->
+    <script src = '../../js/prop-types.js'></script>
+    <script type = 'text/babel'>
+        // 创建一个容器
+        class Demo extends React.Component {
+            myRef = React.createRef();
+            render(){
+                return (
+                    <div>
+                        {/*这个输入框是用ref处理的*/}
+                        <input ref = {this.myRef} type="text" placeholder="点击按钮提示数据"/>
+                        <button onClick = {this.showData}>点我提示左侧的数据</button>    
+                         {/*这个输入框是用event.target处理的*/}
+                        <input type="text" onBlur = {this.showData2} placeholder="失去焦点提示数据"/>
+                    </div>
+                )
+            }
+            showData = ()=>{
+                alert(this.myRef.current.value);
+            }
+            showData2 = (event)=>{
+                alert(event.target.value);
+            }
+        }
+        ReactDOM.render(<Demo/>,document.getElementById('test'));
+    </script>
+</body>
+</html>

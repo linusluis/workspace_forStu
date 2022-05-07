@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>state简写方式</title>
+</head>
+<body>
+    <!-- 创建一个容器 -->
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script src = '../../js/react.development.js'></script>
+    <!-- 引入react-dom库，用于让react操作DOM -->
+    <script src = '../../js/react-dom.development.js'></script>
+    <!-- 引入babel 用于将jsx转为js-->
+    <script src = '../../js/babel.min.js'></script>
+    <script type = 'text/babel'>
+        class Weather extends React.Component {
+            state = {isHot:false};
+            handleWeather = ()=>{
+                console.log(this);
+                const {isHot} = this.state;
+                this.setState({isHot:!isHot});
+            }
+            render(){
+                const {isHot} = this.state;
+                return (
+                    <h1 onClick = {this.handleWeather}>今天天气很{isHot?'炎热':'凉爽'}</h1>
+                )
+            }
+        }
+        ReactDOM.render(<Weather/>,document.getElementById('test'));
+    </script>
+</body>
+</html>

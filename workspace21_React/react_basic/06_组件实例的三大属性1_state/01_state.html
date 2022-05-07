@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01_state</title>
+    
+</head>
+<body>
+    <!-- 创建一个容器 -->
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script src = '../../js/react.development.js' ></script>
+    <!-- 引入react-dom，为了让react操作DOM -->
+    <script src = '../../js/react-dom.development.js'></script>
+    <!-- 引入babel，为了让jsx转为js -->
+    <script src = '../../js/babel.min.js'></script>
+    <script type = 'text/babel'>
+        //创建一个类式组件
+        class Weather extends React.Component {
+            constructor(props){ //想让组件有状态就需要使用构造器
+                super(props);
+                //初始化状态
+                this.state = {isHot:false,wind:'微风'};//这个this是组件实例对象
+                //解决changeWeather中的this指向问题
+                this.changeWeather = this.changeWeather.bind(this);
+            }
+
+            render(){
+                //读取状态
+                const {isHot,wind} = this.state; //解构赋值
+                console.log(this.state);//这个this也是组件实例对象
+                return <h1 onClick = {this.changeWeather}>今天天气很{isHot?'炎热':'凉爽'},{wind}</h1> //注意不要写成demo()，
+                //如果写成demo()，意思就是将demo函数的返回值赋值给onclick事件了，当执行onclick事件时onclick不生效，被赋值为undefined了.
+                //而且还要注意事件名称要尊新小驼峰
+            }
+
+            changeWeather(){
+                //changeWeather放在了哪里？——Weather的原型对象上，供实例使用
+                //由于changeWeather是作为oncClick的回调，所以不是通过实例调用的，是函数直接调用
+                //类中的方法默认开启了局部的严格模式，所以changeWeather中的this为undefined
+                console.log(this);
+                //获取原来的isHot值
+                const isHot = this.state.isHot;
+                //严重注意：状态必须通过setState进行更新，且更新是一种合并，不是替换。
+                this.setState({isHot:!isHot});
+                //严重注意：状态(state)不可以直接更改，下面这行就是直接更改！！！
+                // this.state.isHot = !isHot;
+            }
+        }
+        //渲染组件到页面
+        ReactDOM.render(<Weather/>,document.getElementById('test'));
+        
+    </script>
+</body>
+</html>
